@@ -1,0 +1,18 @@
+Disabling on-board Bluetooth Permalink
+The steps below shows how to disable on-board Bluetooth and related services. Those steps also disable loading the related kernel modules such as bluetooth, hci_uart, btbcm, etc at boot.
+
+Open /boot/config.txt file Permalink
+sudo vi /boot/config.txt
+
+Looking in /boot/overlays/README from the September 2019 release of Raspbian Buster I can now see disable-bt and disable-wifi documented
+
+Add below, save and close the file Permalink
+# Disable Bluetooth
+dtoverlay=disable-bt
+
+Info: Disable onboard Bluetooth on Pi 3B, 3B+, 3A+, 4B and Zero W, restoring UART0/ttyAMA0 over GPIOs 14 (pin 8) & 15 (pin10). N.B. To disable the systemd service that initialises the modem so it doesn’t use the UART, use ‘sudo systemctl disable hciuart’.
+
+Disable related services Permalink
+sudo systemctl disable hciuart.service
+sudo systemctl disable bluealsa.service
+sudo systemctl disable bluetooth.service
